@@ -43,11 +43,11 @@ def batch_accuracy(predictions, targets):
 
 def dataset_load_label_mask(label):
     if label == 3:
-        return 1
+        return torch.tensor([1])
     elif label == 7:
-        return 0
+        return torch.tensor([0])
     else: 
-        return -1
+        return torch.tensor([-1])
 
 
 def create_image_dataset_mask(dataset, mask_vals):
