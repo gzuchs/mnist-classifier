@@ -21,20 +21,16 @@ class BasicOptimizer:
 
 
 # Loss and Functions
-def binary_crossentropy_loss(predictions, targets):
-    predictions = predictions.sigmoid()
-    
-    # loss = torch.where(targets == 1, 1 - predictions, predictions).mean()
+def binary_cross_entropy_loss(predictions, targets):
+    """Calculates cross entropy loss for two classes."""
     loss = (((1 - predictions) ** targets) * (predictions ** (1 - targets))).mean()
     return loss
 
 
 # Accuracy Functions
 def batch_accuracy(predictions, targets):
-    predictions = predictions.sigmoid()
-    
+    """Calculates prediction accuracy."""
     accuracy = ((predictions > 0.5) == targets).float().mean()
-    
     return accuracy
 
 
