@@ -1,0 +1,3 @@
+# MNIST Classifier
+
+This repository allows for training of an MNIST deep neural network classifier. The fit loop has been created from scratch, and contains methods for calculating gradients, training an epoch, reporting validation loss and metrics, and fitting for a given epoch count and learning rate. There are also test scripts for creating a binary classifier of only two digits, and a multiclass classifier for all digits.
