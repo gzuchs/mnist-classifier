@@ -26,6 +26,10 @@ def binary_cross_entropy_loss(predictions, targets):
     loss = (((1 - predictions) ** targets) * (predictions ** (1 - targets))).mean()
     return loss
 
+def categorical_cross_entropy_loss(predictions, targets):
+    """Calculates cross entropy loss for multiple classes."""
+    loss = -(targets * predictions.log()).sum(axis=1).mean()
+    return loss
 
 # Accuracy Functions
 def batch_accuracy(predictions, targets):
@@ -33,6 +37,10 @@ def batch_accuracy(predictions, targets):
     accuracy = ((predictions > 0.5) == targets).float().mean()
     return accuracy
 
+def multiclass_accuracy(predictions, targets):
+    """Calculates multiclass prediction accuracy."""
+    accuracy = (predictions.argmax(axis=1) == targets.argmax(axis=1)).float().mean()
+    return accuracy
 
 # Data Load Functions
 def convert_image_data_to_row(img):

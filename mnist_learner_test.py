@@ -7,14 +7,6 @@ import utils
 
 from pathlib import Path
 
-# Data Loading Functions
-
-
-
-
-
-
-
 if __name__ == '__main__':
     device = 'cuda' if torch.cuda.is_available() else 'cpu'
     kwargs = {'num_workers': 1, 'pin_memory': True} if device == 'cuda' else {}
