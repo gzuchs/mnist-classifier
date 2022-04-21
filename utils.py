@@ -1,3 +1,4 @@
+import torch 
 
 # Optimizer Classes and Functions
 
@@ -18,9 +19,24 @@ class BasicOptimizer:
         for p in self.parameters:
             p.grad = None
 
+
 # Loss and Functions
+def binary_crossentropy_loss(predictions, targets):
+    predictions = predictions.sigmoid()
+    
+    # loss = torch.where(targets == 1, 1 - predictions, predictions).mean()
+    loss = (((1 - predictions) ** targets) * (predictions ** (1 - targets))).mean()
+    return loss
+
 
 # Accuracy Functions
+def batch_accuracy(predictions, targets):
+    predictions = predictions.sigmoid()
+    
+    accuracy = ((predictions > 0.5) == targets).float().mean()
+    
+    return accuracy
+
 
 # Data Load Functions
 def convert_image_data_to_row(img):
@@ -28,3 +44,20 @@ def convert_image_data_to_row(img):
     img_dimensions = img.shape[-2], img.shape[-1]
     
     return img.view(-1, img_dimensions[0] * img_dimensions[1]).squeeze()
+
+def create_image_dataset_mask(dataset, mask_vals):
+    """Creates mask of labels in a dataset to keep."""
+    mask = dataset.targets != dataset.targets
+    
+    for mask_val in mask_vals:
+        mask |= dataset.targets == mask_val
+    
+    return mask
+    
+def dataset_load_label_mask(label):
+    if label == 3:
+        return torch.tensor([1])
+    elif label == 7:
+        return torch.tensor([0])
+    else: 
+        return torch.tensor([-1])
