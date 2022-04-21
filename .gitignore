@@ -1,4 +1,9 @@
-# Files
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
 
-# Folders
+# C extensions
+*.so
+
+# Data Folders
 */**/MNIST/raw/*

@@ -3,24 +3,13 @@ from torchvision.datasets import MNIST
 import torchvision.transforms as T
 from mnist_learner import Learner
 
+from utils import BasicOptimizer, convert_image_data_to_row
+
 from pathlib import Path
 
 # Train Loop Functions
 
-class BasicOptimizer:
-    """Basic Optimizer that can update parameters using gradients."""
-    
-    def __init__(self, parameters, learning_rate):
-        self.parameters = parameters
-        self.learning_rate = learning_rate
-        
-    def step(self):
-        for p in self.parameters:
-            p.data -= self.learning_rate * p.grad.data
-    
-    def zero_grad(self):
-        for p in self.parameters:
-            p.grad = None
+
 
 
 def mnist_loss(predictions, targets):
@@ -66,17 +55,17 @@ if __name__ == '__main__':
     
     
     train_mnist_images = MNIST(
-        Path('Datasets'), train=True, 
+        Path('assets/datasets'), train=True, 
         transform=T.Compose(
             [
-                T.ToTensor(), T.Lambda(lambda x: x.flatten(start_dim=-2).squeeze())
+                T.ToTensor(), T.Lambda(convert_image_data_to_row)
             ]
         ),
         target_transform=dataset_load_label_mask
     )
     
     valid_mnist_images = MNIST(
-        Path('Datasets'), train=False, 
+        Path('assets/datasets'), train=False, 
         transform=T.Compose(
             [
                 T.ToTensor(), T.Lambda(lambda x: x.view(-1, 28*28).squeeze())
