@@ -3,20 +3,20 @@ import torch
 # Optimizer Classes and Functions
 
 class BasicOptimizer:
-    """Basic Optimizer that can update parameters using gradients."""
+    """Basic Optimizer that can update model parameters using gradients."""
     
-    def __init__(self, parameters, learning_rate):
-        self.parameters = parameters
+    def __init__(self, model, learning_rate):
+        self.model = model
         self.learning_rate = learning_rate
 
     def step(self):
-        """Applies gradients to parameters."""
-        for p in self.parameters:
+        """Applies gradients to model parameters."""
+        for p in self.model.parameters():
             p.data -= self.learning_rate * p.grad.data
     
     def zero_grad(self):
         """Zeroes out gradients after applying step."""
-        for p in self.parameters:
+        for p in self.model.parameters():
             p.grad = None
 
 

@@ -47,7 +47,8 @@ if __name__ == '__main__':
                 torch.nn.Sigmoid()
     )
     
-    learn = Learner(train_dataset, valid_dataset, model, opt_func=torch.optim.SGD, loss_func=utils.binary_cross_entropy_loss, metrics=utils.batch_accuracy)
+    # learn = Learner(train_dataset, valid_dataset, model, opt_func=torch.optim.SGD, loss_func=utils.binary_cross_entropy_loss, metrics=utils.batch_accuracy)
+    learn = Learner(train_dataset, valid_dataset, model, opt_func=utils.BasicOptimizer, loss_func=utils.binary_cross_entropy_loss, metrics=utils.batch_accuracy)
     
     learn.fit(10, lr=1)
     

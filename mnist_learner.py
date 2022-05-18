@@ -91,7 +91,7 @@ class Learner:
     def fit(self, epochs, lr=0.1):
         """Fits network parameters to best fit inputs and outputs over epochs loops using lr as learning rate.
         """
-        self.optimizer = self.optimizer_class(self.model.parameters(), lr)
+        self.optimizer = self.optimizer_class(self.model, lr)
         
         for i in range(epochs):
             self._train_epoch()
