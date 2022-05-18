@@ -36,7 +36,7 @@ if __name__ == '__main__':
                 torch.nn.Linear(28*28, 128),
                 torch.nn.ReLU(),
                 torch.nn.Linear(128, 10),
-                torch.nn.Softmax()
+                torch.nn.LogSoftmax(dim=1)
     )
     
     learn = Learner(train_dataset, valid_dataset, model, opt_func=torch.optim.SGD, loss_func=utils.categorical_cross_entropy_loss, metrics=utils.multiclass_accuracy)

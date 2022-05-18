@@ -28,7 +28,7 @@ def binary_cross_entropy_loss(predictions, targets):
 
 def categorical_cross_entropy_loss(predictions, targets):
     """Calculates cross entropy loss for multiple classes."""
-    loss = -(targets * predictions.log()).sum(axis=1).mean()
+    loss = -(targets * predictions).sum(axis=1).mean()
     return loss
 
 # Accuracy Functions
