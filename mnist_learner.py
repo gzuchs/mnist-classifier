@@ -3,6 +3,12 @@ import torch
 class Learner:
     """Class to fit a two-layer neural network.
     """
+    
+    HEADER = "|  train loss  |  valid loss  | valid metric |"
+    HEADER_COL_LENGTH = len("  train loss  ")
+    
+    PADDING = "-" * len(HEADER)
+    
     def __init__(self, training_dataset, validation_dataset, model, opt_func=None, loss_func=None, metrics=None, opt_requires_model=False):
         """Creates object.
         
@@ -55,8 +61,6 @@ class Learner:
 
 
     def _train_epoch(self):
-        # train_dl = torch.utils.data.DataLoader(self.training_dataset, batch_size=256)
-        
         train_losses = 0
         
         for x_batch, y_batch in self.training_dataset:
@@ -71,7 +75,6 @@ class Learner:
 
 
     def _validate_epoch(self):
-        # val_dl = torch.utils.data.DataLoader(self.validation_dataset, batch_size=256)
         num_batches = len(self.validation_dataset)
         
         val_losses = 0
@@ -96,9 +99,21 @@ class Learner:
         optimizer_input = self.model if self.opt_requires_model else self.model.parameters()
         self.optimizer = self.optimizer_class(optimizer_input, lr)
         
+        print(self.PADDING)
+        print(self.HEADER)
+        print(self.PADDING)
+        
         for i in range(epochs):
             self._train_epoch()
             self._validate_epoch()
             
-            print(f"{self.epoch_training_loss[-1]} | {self.epoch_validation_loss[-1]} | {self.epoch_metrics[-1]}")
+            print("|" + "|".join(
+                [
+                    f"{value:0.4f}".center(self.HEADER_COL_LENGTH) 
+                    for value in [
+                        self.epoch_training_loss[-1], self.epoch_validation_loss[-1], self.epoch_metrics[-1]
+                    ]
+                ]
+            ) + "|")
         
+        print(self.PADDING)
