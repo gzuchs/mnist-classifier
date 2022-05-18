@@ -3,7 +3,7 @@ import torch
 class Learner:
     """Class to fit a two-layer neural network.
     """
-    def __init__(self, training_dataset, validation_dataset, model, opt_func=None, loss_func=None, metrics=None):
+    def __init__(self, training_dataset, validation_dataset, model, opt_func=None, loss_func=None, metrics=None, opt_requires_model=False):
         """Creates object.
         
         dataloaders = DataLoader containing training set DataLoader [0] and validation set DataLoader [1]
@@ -19,6 +19,8 @@ class Learner:
             opt_func = torch.optim.SGD
             
         self.optimizer_class = opt_func
+        
+        self.opt_requires_model = opt_requires_model
         
         if loss_func is None:
             loss_func = torch.nn.NLLLoss()
@@ -91,7 +93,8 @@ class Learner:
     def fit(self, epochs, lr=0.1):
         """Fits network parameters to best fit inputs and outputs over epochs loops using lr as learning rate.
         """
-        self.optimizer = self.optimizer_class(self.model, lr)
+        optimizer_input = self.model if self.opt_requires_model else self.model.parameters()
+        self.optimizer = self.optimizer_class(optimizer_input, lr)
         
         for i in range(epochs):
             self._train_epoch()

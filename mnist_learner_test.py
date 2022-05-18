@@ -48,7 +48,7 @@ if __name__ == '__main__':
     )
     
     # learn = Learner(train_dataset, valid_dataset, model, opt_func=torch.optim.SGD, loss_func=utils.binary_cross_entropy_loss, metrics=utils.batch_accuracy)
-    learn = Learner(train_dataset, valid_dataset, model, opt_func=utils.BasicOptimizer, loss_func=utils.binary_cross_entropy_loss, metrics=utils.batch_accuracy)
+    learn = Learner(train_dataset, valid_dataset, model, opt_func=utils.BasicOptimizer, loss_func=utils.binary_cross_entropy_loss, metrics=utils.batch_accuracy, opt_requires_model=True)
     
     learn.fit(10, lr=1)
     
